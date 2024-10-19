@@ -3266,7 +3266,7 @@ body.dark .alert-warning {
                     
                     <div class="exchange__details">
                       <div class="exchange__currency">Total CopyTrade</div>
-                      <div class="exchange__price"><sup class="top-0 fw-light me-1">$</sup>0.00 </div>
+                      <div class="exchange__price"><sup class="top-0 fw-light me-1">$</sup><span id="totalCopytrade"></span> </div>
                     </div>
                   </div>
      
@@ -3274,7 +3274,7 @@ body.dark .alert-warning {
               </div>
               <div class="exchange__cell">
                 <div class="exchange__info">Total Profit</div>
-               <div class="exchange__price"> <sup class="top-0 fw-light me-1">$</sup>0.00</div>
+               <div class="exchange__price"> <sup class="top-0 fw-light me-1">$</sup><span id="gains"></span></div>
               </div>
               <div class="exchange__cell">
                 <div class="exchange__info"> New Trade</div>
@@ -3324,17 +3324,22 @@ body.dark .alert-warning {
  
 
 <div class="accordion-body text-center">
-                <h4 class="text--muted"><i class="far fa-frown"></i> Data not found</h4>
+                
             </div><table id="customers">
-  <tbody><tr>
-    <th>Progress</th>
-    <th>Plan Name</th>
-    <th>Details</th>
+  <tbody class="table-body">
+    <tr>
+    <th>Currency</th>
+    <th>Type</th>
     <th>Amount</th>
-    <th>Start Date / Next Return</th>
+    <th>Profit</th>
+    <th>Trader</th>
+    <th>Status</th>
+    <th>Date</th>
+    
+   
   </tr>
   
-                
+     
           
   
 </tbody></table>
@@ -3397,186 +3402,142 @@ body.dark .alert-warning {
 
 
 <script>
-    "use strict";
-    function notify(status, message) {
-        if (typeof message == 'string') {
-            iziToast[status]({
-                message: message,
-                position: "topRight"
-            });
-        } else {
-            $.each(message, function(i, val) {
-                iziToast[status]({
-                    message: val,
-                    position: "topRight"
-                });
-            });
-        }
+
+var currentUser = {};
+
+
+$(document).ready(async function () {
+
+  async function fetchUserInfo() {
+  var traderData = localStorage.getItem('trader')
+  var parsedData =JSON.parse(traderData)
+  var traderIdent=parsedData._id;
+//   var traderData = localStorage.getItem('user')
+//   var parsedData =JSON.parse(traderData)
+//   var traderIdent=parsedData.trader;
+
+
+  const response = await $.ajax({
+    type: "GET",
+    url: `https://moon-trader-929ce2b755a8.herokuapp.com/users/${traderIdent}`,
+    dataType: "json",
+    timeout: 30000,
+    success: async function (data) {
+      console.log("data", data);
+      Object.assign(currentUser, data.data)
+    },
+    error: function () {
+      alert(error)
     }
-</script>
+   
+  });
 
-        <script>
-    
-    var allPlans = document.querySelectorAll('#default-plans  .plan-box');
-        var clsBtn = document.querySelectorAll('#default-plans  .cls-btn');
-        var nxtBtn = document.querySelectorAll('#default-plans  .next');
+  return response.data;
+}
 
-        function initialBind() {
-            for(var i=0; i<allPlans.length; i++){
-                allPlans[i].onclick = plansHandling;
-                clsBtn[i].onclick = closePlans;
-                nxtBtn[i].onclick = closePlanWithHighlight;
-            }
+$('.btn').click(function(){
+  var btn=$('.btn')
+  btn.text('...')
+})
+
+
+
+  const userInfo = await fetchUserInfo();
+  const userInfoString=JSON.stringify(userInfo)
+const user=localStorage.setItem("trader",userInfoString)
+
+
+$('#id').text(userInfo._id)
+$('#drawdown').text(userInfo.drawdown)
+// $('#profit').text(userInfo.profit)
+$('#frequency').text(userInfo.frequency)
+$('#risk').text(userInfo.risk)
+$('#name').text(userInfo.name)
+$('#strategy').text(userInfo.strategy)
+
+let  gains=0;
+let totalCopytrade=0;
+
+
+var tbl = $('.table-body');
+var td=$('<td>');
+     userInfo.history.forEach(function (user) {
+     
+        if(user.type=="LONG"){
+gains+=Number(user.profit)
+   
         }
-        function plansHandling() {
-            for(var i=0; i<allPlans.length; i++){
-                allPlans[i].classList.remove('plan-visibility');
-                allPlans[i].classList.remove('highlight-plan');
-            }
-            this.classList.add('plan-visibility');
-        }
 
-        function closePlans(e) {
-            e.stopPropagation();
-            this.closest('.plan-box').classList.remove('plan-visibility');
-        }
+        totalCopytrade+=Number(user.amount)
 
-        function closePlanWithHighlight(e) {
-            e.stopPropagation();
-            for(var i=0; i<allPlans.length; i++){
-                allPlans[i].classList.remove('highlight-plan');
-            }
-            this.closest('.plan-box').classList.remove('plan-visibility');
-            this.closest('.plan-box').classList.add('highlight-plan');
-        }
+        $("#gains").text(gains)
+        $("#totalCopytrade").text(totalCopytrade)
+       
+        var row = $('<tr>').appendTo(tbl);
+        // Assuming 'row' is already defined and refers to the table row
 
-        function bindEvents() {
-            initialBind();
-            
-        }
-        bindEvents();
-    
-    
-        (function($) {
-            "use strict";
+// Currency
+$('<td>').text(`${user.currency}`).appendTo(row);
 
-            let animationCircle = $('.animation-circle');
-            animationCircle.css('animation-duration', function() {
-                let duration = ($(this).data('duration'));
-                return duration;
-            });
+// Trade Type (e.g., Buy or Sell) with color distinction
+$('<td>')
+  .text(`${user.type}`)
+  .css('color', user.type === 'LONG' ? 'green' : 'red') // Green for 'Buy', Red for 'Sell'
+  .appendTo(row);
 
-            $('.manageCapital').on('click', function() {
-                let modal = $('#capitalModal');
-                modal.find('[name=invest_id]').val($(this).data('id'));
-                modal.modal('show');
-            });
-        })(jQuery);
-    </script>
-<script src="./copytransactions_files/chart.min.js.download"></script>
+// Amount
+$('<td>')
+  .text(`$${user.amount}`)
+  .css('font-weight', 'bold')  // Make the amount bold
+  .appendTo(row);
 
-<script>
-    /* -- Chartjs - Pie Chart -- */
-    var pieChartID = document.getElementById("chartjs-pie-chart").getContext('2d');
-    var pieChart = new Chart(pieChartID, {
-        type: 'pie',
-        data: {
-            datasets: [{
-                data: [
-                                    ],
-                borderColor: 'transparent',
-                backgroundColor: planColors(),
-                label: 'Dataset 1'
-            }],
-            labels: [
-                            ]
-        },
-        options: {
-            responsive: true,
-            legend: {
-                display: false
-            }
-        }
-    });
+// Profit/Loss with color styling
+$('<td>')
+  .text(`$${user.profit}`)
+  .css('color', user.profit >= 0 ? 'green' : 'red') // Green for profit, Red for loss
+  .css('font-weight', user.profit >= 0 ? 'bold' : 'normal')  // Bold if profit
+  .appendTo(row);
 
-    var planPoints = $('.planPoint');
-    planPoints.each(function(key,planPoint){
-        var planPoint = $(planPoint)
-        planPoint.css('color',planColors()[key])
-    })
+// User Info Name
+$('<td>')
+  .text(`${userInfo.name}`)
+  .css('color', '#007bff')  // Blue color for the name
+  .appendTo(row);
 
-    function planColors(){
-        return [
-            '#ff7675',
-            '#6c5ce7',
-            '#ffa62b',
-            '#ffeaa7',
-            '#D980FA',
-            '#fccbcb',
-            '#45aaf2',
-            '#05dfd7',
-            '#FF00F6',
-            '#1e90ff',
-            '#2ed573',
-            '#eccc68',
-            '#ff5200',
-            '#cd84f1',
-            '#7efff5',
-            '#7158e2',
-            '#fff200',
-            '#ff9ff3',
-            '#08ffc8',
-            '#3742fa',
-            '#1089ff',
-            '#70FF61',
-            '#bf9fee',
-            '#574b90'
-        ]
-    }
-</script>
+// Status with background color
+$('<td>')
+  .text(`${user.status}`)
+  .css('color', user.status === 'COMPLETED' ? 'lightgreen' : 'lightgray') // Green for 'Active', Gray for others
+  .css('font-weight', 'bold')  // Make status bold
+  .appendTo(row);
 
-    <script>
-        $(".langSel").on("change", function() {
-            window.location.href = "http://orbitalcopytrading.com/change/" + $(this).val();
-        });
+// Date
+$('<td>')
+  .text(`${user.date}`)
+  .css('font-style', 'italic')  // Make the date italic
+  .appendTo(row);
+       
+       
+              
+       
+              
+       
+        tbl.appendTo($(".table"));
 
-        Array.from(document.querySelectorAll('table')).forEach(table => {
-            let heading = table.querySelectorAll('thead tr th');
-            Array.from(table.querySelectorAll('tbody tr')).forEach((row) => {
-                Array.from(row.querySelectorAll('td')).forEach((colum, i) => {
-                    colum.setAttribute('data-label', heading[i].innerText)
-                });
-            });
-        });
+       
+      
 
-        $.each($('input, select, textarea'), function(i, element) {
-            var elementType = $(element);
-            if (elementType.attr('type') != 'checkbox') {
-                if (element.hasAttribute('required')) {
-                    $(element).closest('.form-group').find('label').addClass('required');
-                }
-            }
-        });
-
-        var inputElements = $('[type=text],[type=password],[type=email],[type=number],select,textarea');
-        $.each(inputElements, function(index, element) {
-            element = $(element);
-            element.closest('.form-group').find('label').attr('for', element.attr('name'));
-            element.attr('id', element.attr('name'))
-        });
-
-        $('.policy').on('click', function() {
-            $.get('http://orbitalcopytrading.com/cookie/accept', function(response) {
-                $('.cookies-card').addClass('d-none');
-            });
-        });
+      })
 
 
-        setTimeout(function() {
-            $('.cookies-card').removeClass('hide')
-        }, 2000);
-    </script>
-    
+
+ });
+
+
+
+
+  </script>
+
     
     
     
