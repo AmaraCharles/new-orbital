@@ -2813,9 +2813,21 @@ body.dark .alert-warning {
           <!--  </div>-->
           <!--</div>-->
           <div>
-                  Hi, <span style="text-transform: capitalize;">grantpierce</span> 
-              </div>
-              
+                    Hi, <span style="text-transform: capitalize;" id="nickname"></span> 
+                </div>
+                <script>
+                  $(document).ready(async function(){
+                  var getNickname=localStorage.getItem("user")
+                 
+                 var parsedUser=JSON.parse(getNickname)
+                 console.log(parsedUser.firstName);
+               
+                 var nickname=document.getElementById("nickname")
+                 nickname.innerHTML=parsedUser.firstName;
+                })
+                
+                  </script>    
+                 
               
           <div class="header__item header__item_lang">
               

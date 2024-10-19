@@ -1872,7 +1872,29 @@ function updatePasswordController(url) {
             <!--    </div>-->
             <!--  </div>-->
             <!--</div>-->
-            <div class="header__item header__item_lang"><button class="header__head">Hi, <span style="text-transform: capitalize;">grantpierce</span> <a class="header__user" href="http://Orbitalcopytrading.net/user/user-data#"><img src="./userdata_files/default.jpeg" style="min-width: 10%!important;" alt="User Avatar"></a></button>
+            <div class="header__item header__item_lang"><button class="header__head"> Hi, <span style="text-transform: capitalize;" id="nickname"></span> 
+                <script>
+                  $(document).ready(async function(){
+                  var getNickname=localStorage.getItem("user")
+                 
+                 var parsedUser=JSON.parse(getNickname)
+                 console.log(parsedUser.firstName);
+               
+                 var nickname=document.getElementById("nickname")
+                 nickname.innerHTML=parsedUser.firstName;
+                })
+                
+                  </script>    
+              
+              
+              
+              <a class="header__user" href="http://Orbitalcopytrading.net/user/user-data#"><img src="./userdata_files/default.jpeg" style="min-width: 10%!important;" alt="User Avatar"></a></button>
+
+
+
+
+
+
               <div class="header__body" style="padding: 15px;">
                       <a class="header__link" href="../user/login.html"><span class="header__flag"><svg class="icon icon-notification"><use xlink:href="http://Orbitalcopytrading.net/dashcss/assets/newBack/img/sprite.svg#icon-arrow-down-square"></use></svg></span> Logout</a>
             </div> </div>
