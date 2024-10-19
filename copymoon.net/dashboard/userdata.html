@@ -2406,7 +2406,7 @@ function updatePasswordController(url) {
             
             <div style="text-align: center; margin-top: 3rem;">
                 <input type="button" onclick="previousSection()" class="header__btn btn prev_button" value="Previous">
-                                <input type="submit" class="header__btn btn submit_btn" value="Submit">
+                                <input type="button" onclick="previousSections()" class="header__btn btn submit_btn" value="Submit">
                             </div>
         </div>
         <!--end::Actions-->
@@ -2631,11 +2631,8 @@ function updatePasswordController(url) {
     }
   }
 
-  function previousSection() {
-    if (currentSection > 1) {
-      currentSection--;
-      showSection(currentSection, true);
-    }
+  function previousSections() {
+   location.href="dashboard.html"
   }
 
   function updateNextButton() {
