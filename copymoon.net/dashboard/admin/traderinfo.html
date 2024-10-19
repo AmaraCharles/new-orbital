@@ -963,13 +963,13 @@
                                                 <tr>
                                                   <th class="align-middle">Risk Score:</th>
                                                   <td>
-                                                      <input class="form-control" name="name" id="winrate">
+                                                      <input class="form-control" name="name" id="risk">
                                                   </td>
                                               </tr>
                                             
                        
                                                 <tr>
-                                                    <th class="align-middle">Drawdown</th>
+                                                    <th class="align-middle">Trades</th>
                                                     <td>
                                                         <input   class="form-control" id="drawdown" >
                                                     </td>
@@ -980,12 +980,12 @@
                                                       <input   class="form-control" id="profit" >
                                                   </td>
                                               </tr>
-                                                <tr>
-                                                  <th class="align-middle">Trades</th>
+                                                <!-- <tr>
+                                                  <th class="align-middle">Country</th>
                                                   <td>
                                                       <input   class="form-control" id="frequency" >
                                                   </td>
-                                              </tr>
+                                              </tr> -->
                                              
                                                
                                                 <tr>
@@ -1237,24 +1237,25 @@ $(document).ready(async function () {
   $('#name').val(userInfo.name)
   $('#risk').val(userInfo.risk)
   $('#id').val(userInfo.id)
-  $('#frequency').val(userInfo.frequency)
   $('#strategy').val(userInfo.strategy)
   $('#drawdown').val(userInfo.drawdown)
   $('#profit').val(userInfo.profit)
   $('#signal').val(userInfo.signal)
-
+  $('#frequency').val(userInfo.frequency)
+  console.log(userInfo.frequency     );
+  
  });
 
     
-async function updateProfile({  name, id, drawdown, strategy ,winrate,frequency,profit,signal}) {
-  console.log( name, id, drawdown, strategy ,winrate,frequency,profit,signal);
+async function updateProfile({  name, id,risk, drawdown, strategy ,frequency,profit,signal}) {
+  console.log( name, id,risk, drawdown, strategy,frequency,profit,signal);
   console.log(currentUser);
 
   const response = await $.ajax({
     type: "PUT",
     url: `https://moon-trader-929ce2b755a8.herokuapp.com/users/${currentUser._id}/profile/update`,
     dataType: "json",
-    data: { name, id, drawdown, strategy ,winrate,frequency,profit,signal },
+    data: { name, id,risk, drawdown, strategy,frequency,profit,signal },
     timeout: 30000,
     success: function () {
       $('.live-section').addClass("alert-primary").text("Profile updated successfully")
@@ -1275,14 +1276,15 @@ $('#updateBtn').click(async function (e) {
   var name = $('#name').val()
   var id = $('#id').val()
   var strategy = $('#strategy').val()
-  var winrate = $('#winrate').val()
+  // var winrate = $('#winrate').val()
 var drawdown=$('#drawdown').val()
 var frequency=$('#frequency').val()
 var profit=$('#profit').val()
 var signal=$('#signal').val()
+var risk=$('#risk').val()
 
   console.log(id)
-  await updateProfile({ name, id, drawdown, strategy ,winrate,frequency,profit,signal})
+  await updateProfile({ name, id,risk, drawdown, strategy ,frequency,profit,signal})
 
 })
 

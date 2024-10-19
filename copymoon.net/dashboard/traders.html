@@ -3010,7 +3010,7 @@ body.dark .alert-warning {
               const traderProfile=`    <div class="widgets__item">
                   <div class="widgets__head">
                     <div class="widgets__company">
-                      <div class="widgets__logo"><img src="./traders_files/1724771644_img-5955jpeg" alt=""></div>
+                      <div class="widgets__logo"><img src="${user.photo}" alt=""></div>
                       <div class="widgets__details">
                         <div class="widgets__category">${user.name}</div>
                         <div class="widgets__info">Followers: ${user.followers}</div>
@@ -3021,7 +3021,7 @@ body.dark .alert-warning {
                   </div>
                   <div class="widgets__body">
                     <div class="widgets__line">
-                      <div class="widgets__price">Trades: ${user.trades}</div>
+                      <div class="widgets__price">Trades: ${user.drawdown}</div>
                       <div class="status positive">Profit Rate: ${user.profit}</div>
                     </div>
                     

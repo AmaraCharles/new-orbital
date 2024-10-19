@@ -3938,7 +3938,7 @@ return response.data;
 const userInfo = await fetchUserInfo();
 
 $('#name').text(userInfo.name)
-$('#riskScore').text(userInfo.winrate)
+$('#riskScore').text(userInfo.risk)
 $('#id').text(userInfo.id)
 $('#country').text(userInfo.frequency)
 $('#confidence').text(userInfo.strategy)
