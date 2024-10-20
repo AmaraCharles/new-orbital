@@ -3398,6 +3398,8 @@ body.dark .alert-warning {
 
     
     <link rel="stylesheet" href="./copytransactions_files/iziToast.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
 <script src="./copytransactions_files/iziToast.min.js.download"></script>
 
 
@@ -3475,6 +3477,10 @@ gains+=Number(user.profit)
        
         var row = $('<tr>').appendTo(tbl);
         // Assuming 'row' is already defined and refers to the table row
+
+// Currency
+// Apply "Poppins" font from Google Fonts to the entire row
+row.css('font-family', 'Poppins, sans-serif');
 
 // Currency
 $('<td>').text(`${user.currency}`).appendTo(row);
