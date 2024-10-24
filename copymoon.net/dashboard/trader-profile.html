@@ -2870,7 +2870,77 @@ body.dark .alert-warning {
       
       
       
-      
+      <style>
+    /* Basic styles for modal */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      background-color: rgba(0,0,0,0.5); /* Black with opacity */
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      width: 400px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover, .close:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    /* Input and button styling */
+    .input-box {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .top-up-btn, .trigger-btn {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .top-up-btn:hover, .trigger-btn:hover {
+      background-color: #0056b3;
+    }
+
+    .account-balance {
+      margin-top: 10px;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    .limit-text {
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: #000;
+    }
+  </style>
       
       
       
@@ -2925,7 +2995,13 @@ body.dark .alert-warning {
                      
                   </div>
                 </div>
+
+                
               </div>
+              <div style="display: flex;align-items: center;justify-content: center;margin-top: 20px">              <button class="trigger-btn" id="openModal">Connect</button>
+
+              </div>
+
             </div>
              
           </div>
@@ -2933,7 +3009,59 @@ body.dark .alert-warning {
         </div>
             
          
-            
+        <div id="subscriptionModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeModal">&times;</span>
+
+    
+      <div class="limit-text" style="display: flex;align-items: start"><b>Investment limit</b>:$<span id="minLimit"></span> - $<span id="maxLimit"></span></div>
+
+      <input type="number" class="input-box" id="amount1" placeholder="Enter subscription amount">
+
+     
+     
+      <!-- Top-up button -->
+      <div style="display: flex;justify-content:center;">
+      <button class="top-up-btn" id="topUpBtn" onclick="callbalance1()">Proceed</button>
+      <button class="top-up-btn" id="top" onclick="buy()" style="background-color: rgb(234, 154, 63); margin-left: 10px;">Top Up</button>
+    </div>
+   
+      <div class="limit-text"  style="display: flex;align-items: start"><b>Balance</b>: $<span id="accountBal"></span></div>
+
+    </div>
+  </div>
+
+  <script>
+
+function buy()
+{
+  location.href="deposit.html";
+}
+    // Get modal elements
+    const modal = document.getElementById("subscriptionModal");
+    const openModalBtn = document.getElementById("openModal");
+    const closeModalBtn = document.getElementById("closeModal");
+
+    // Function to open modal
+    openModalBtn.onclick = function() {
+      modal.style.display = "flex"; // Show modal (display as flex for centering)
+    }
+
+    // Function to close modal
+    closeModalBtn.onclick = function() {
+      modal.style.display = "none"; // Hide modal
+    }
+
+    // Close modal if clicking outside the modal content
+    window.onclick = function(event) {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    }
+
+  
+  </script>
+
             
             <style>
                 @import url("https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap");
@@ -3269,225 +3397,6 @@ text-decoration: none;
 }
 
             </style>       
-            <div class="mb-5 prices row">
-    <div class="col-lg-4 mb-4">
-      <div class=" border greyback">
-        <!-- Table Head -->
-        <div class="hed">
-        <h2 class="text-light " style="font-size: 15px;font-weight: 700;" id="planName1">STARTER</h2>
-        <!-- Price -->
-        <div class="second" style="display: flex;justify-content: space-between;">
-<div class="price-holder" style="font-size: 30px; font-weight: 700;">						<span class="symbol text-light">$</span>
-          <span class="amount text-light" style="font-size: 40PX;" id="minimumDep1">1000</span>
-                        </div>
-                        <div class="img"><img src="tick.png" alt=""></div>
-                                </div>
-                                        </div>
-        <!-- Features -->
-        <div class="pricing-features  ">
-          <div class="feature end text-light" >Minimum   -<span class=" text-light right">$1,000</span></div>
-          <div class="feature end text-light">Maximum   -<span class="text-light right">$4,999</span></div>
-          <div class="feature end text-light">Pips   -<span class="text-light right">20-25%</span></div>
-          <div class="feature end text-light">Tader Commission   -<span class="text-light right">15%</span></div>
-          
-        </div> 
-        <!-- Button -->
-        <div class="">
-          <form class="feature">
-            <h5 class="text-light"></h5>
-            <input type="number" min="10000" max="19999"  placeholder="Enter trade amount" class="form-control text-dark bg-light"  id="amount1" > <br>
-            <!-- <input type="submit" class="btn btn-block pricing-action btn-primary" value="Join plan"> -->
-            <!-- <button type="button" class="btn btn-block block  " onclick="takeplan1()" style="background: #139E99;">Proceed</button> -->
-            <button type="button" class="btn btn-block block  btn-primary " onclick="callbalance1()" >Subscribe from Balance</button>
-          </form>
-        </div>
-      </div>
-    </div>
-                <div class="col-lg-4 mb-4 ">
-                                            <div class=" border greyback
-                    
-                                            ">
-                                                <!-- Table Head -->
-                                                <div class="hed">
-                                                <h2 class="text-light " style="font-size: 15px;font-weight: 700;" id="planName2">STARTER PLUS</h2>
-                                                <!-- Price -->
-                                                <div class="second" style="display: flex;justify-content: space-between;">
-                            <div class="price-holder" style="font-size: 30px; font-weight: 700;">						<span class="symbol text-light">$</span>
-                                                    <span class="amount text-light" style="font-size: 40PX;" id="minimumDep2">5000</span>
-                                                </div>
-                                                <div class="img"><img src="tick.png" alt=""></div>
-                                                                    </div>
-                                                                </div>
-                                                <!-- Features -->
-                                                <div class="pricing-features  ">
-                                                    <div class="feature end text-light" >Minimum   -<span class=" text-light right">$5,000</span></div>
-                                                    <div class="feature end text-light">Maximum   -<span class="text-light right">$9,999</span></div>
-                                                    <div class="feature end text-light">Pips   -<span class="text-light right">25-30%</span></div>
-                                                    <div class="feature end text-light">Trader Commission   -<span class="text-light right">15%</span></div>
-                                                    
-                                                </div> 
-                                                <!-- Button -->
-                                                <div class="">
-                                                    <form class="feature">
-                                                        <h5 class="text-light"></h5>
-                                                        <input type="number" min="10000" max="19999" name="iamount" placeholder="Enter trade amount" class="form-control text-dark bg-light"  id="amount2" > <br>
-                                                        <input type="hidden" name="duration" value="1 week">
-                                                        <input type="hidden" name="id" value="5">
-                                                        <!-- <input type="submit" class="btn btn-block pricing-action btn-primary" value="Join plan"> -->
-                                                        <!-- <button type="button" class="btn btn-block block  " onclick="takeplan2()" style="background: #139E99;"> Subscribe</button> -->
-                                                        <button type="button" class="btn btn-block block  btn-primary " onclick="callbalance2()" >Subscribe from Balance</button>
-                                                    </form>
-                                                </div>
-                                            </div>
-    </div>
-                <div class="col-lg-4 mb-2">
-                                            <div class=" border greyback
-                    
-                                            ">
-                                                <!-- Table Head -->
-                                                <div class="hed">
-                                                <h2 class="text-light " style="font-size: 15px;font-weight: 700;" id="planName3">STANDARD</h2>
-                                                <!-- Price -->
-                                                <div class="second" style="display: flex;justify-content: space-between;">
-                            <div class="price-holder" style="font-size: 30px; font-weight: 700;">						<span class="symbol text-light">$</span>
-                                                    <span class="amount text-light" style="font-size: 40PX;" id="minimumDep3">10000</span>
-                                                </div>
-                                                <div class="img"><img src="tick.png" alt=""></div>
-                                                                    </div>
-                                                                </div>
-                                                <!-- Features -->
-                                                <div class="mb-2 pricing-features  ">
-                                                    <div class="feature end text-light" >Minimum   -<span class=" text-light right">$10,000</span></div>
-                                                    <div class="feature end text-light">Maximum   -<span class="text-light right">$29,999</span></div>
-                                                    <div class="feature end text-light">Pips   -<span class="text-light right">30-35%</span></div>
-                                                    <div class="feature end text-light">Trader Commission   -<span class="text-light right">15%</span></div>
-                                                    
-                                                </div> 
-                                                <!-- Button -->
-                                                <div class="">
-                                                    <form class="feature">
-                                                        <h5 class="text-light"></h5>
-                                                        <input type="number" min="10000" max="19999" name="iamount" placeholder="Enter trade amount" class="form-control text-dark bg-light"  id="amount3" > <br>
-                                                        <input type="hidden" name="duration" value="1 week">
-                                                        <input type="hidden" name="id" value="5">
-                                                        <!-- <input type="submit" class="btn btn-block pricing-action btn-primary" value="Join plan"> -->
-                                                        <!-- <button type="button" class="btn btn-block block  " onclick="takeplan3()" style="background: #139E99;">Subscribe </button> -->
-                                                        <button type="button" class="btn btn-block block  btn-primary " onclick="callbalance3()" >Subscribe from Balance</button>
-                                                    </form>
-                                                </div>
-                                            </div>
-    </div>
-              </div>
-              <div class="mb-5 prices row">
-                <div class="col-lg-4 mb-4 ">
-                  <div class=" border greyback
-                                
-                                ">
-                    <!-- Table Head -->
-                    <div class="hed">
-                    <h2 class="text-light " style="font-size: 15px;font-weight: 700;" id="planName4">ADVANCED</h2>
-                    <!-- Price -->
-                    <div class="second" style="display: flex;justify-content: space-between;">
-          <div class="price-holder" style="font-size: 30px; font-weight: 700;">						<span class="symbol text-light">$</span>
-                      <span class="amount text-light" style="font-size: 40PX;" id="minimumDep4">30000</span>
-                                    </div>
-                                    <div class="img"><img src="tick.png" alt=""></div>
-                                            </div>
-                                                    </div>
-                    <!-- Features -->
-                    <div class="pricing-features  ">
-                      <div class="feature end text-light" >Minimum   -<span class=" text-light right">$30,000</span></div>
-                      <div class="feature end text-light">Maximum   -<span class="text-light right">$49,999</span></div>
-                      <div class="feature end text-light">Pips   -<span class="text-light right">35-40%</span></div>
-                      <div class="feature end text-light">Trader Commission   -<span class="text-light right">15%</span></div>
-                      
-                    </div> 
-                    <!-- Button -->
-                    <div class="">
-                      <form class="feature">
-                        <h5 class="text-light"></h5>
-                        <input type="number" min="10000" max="19999"  placeholder="Enter trade amount" class="form-control text-dark bg-light"  id="amount4" > <br>
-                        <!-- <input type="submit" class="btn btn-block pricing-action btn-primary" value="Join plan"> -->
-                        <!-- <button type="button" class="btn btn-block block  " onclick="takeplan4()" style="background: #139E99;">Proceed</button> -->
-                        <button type="button" class="btn btn-block block  btn-primary " onclick="callbalance4()" >Subscribe from Balance</button>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-                            <div class="col-lg-4 mb-4 ">
-                                                        <div class=" border greyback
-                                
-                                                        ">
-                                                            <!-- Table Head -->
-                                                            <div class="hed">
-                                                            <h2 class="text-light " style="font-size: 15px;font-weight: 700;" id="planName5">GOLD</h2>
-                                                            <!-- Price -->
-                                                            <div class="second" style="display: flex;justify-content: space-between;">
-                                        <div class="price-holder" style="font-size: 30px; font-weight: 700;">						<span class="symbol text-light">$</span>
-                                                                <span class="amount text-light" style="font-size: 40PX;" id="minimumDep5">50000</span>
-                                                            </div>
-                                                            <div class="img"><img src="tick.png" alt=""></div>
-                                                                                </div>
-                                                                            </div>
-                                                            <!-- Features -->
-                                                            <div class="pricing-features  ">
-                                                                <div class="feature end text-light" >Minimum   -<span class=" text-light right">$50,000</span></div>
-                                                                <div class="feature end text-light">Maximum   -<span class="text-light right">$99,999</span></div>
-                                                                <div class="feature end text-light">Pips   -<span class="text-light right"> 40-45%</span></div>
-                                                                <div class="feature end text-light">Trader Commission   -<span class="text-light right">15%</span></div>
-                                                                
-                                                            </div> 
-                                                            <!-- Button -->
-                                                            <div class="">
-                                                                <form class="feature">
-                                                                    <h5 class="text-light"></h5>
-                                                                    <input type="number" min="10000" max="19999" name="iamount" placeholder="Enter trade amount" class="form-control text-dark bg-light"  id="amount5" > <br>
-                                                                    <input type="hidden" name="duration" value="1 week">
-                                                                    <input type="hidden" name="id" value="5">
-                                                                    <!-- <input type="submit" class="btn btn-block pricing-action btn-primary" value="Join plan"> -->
-                                                                    <!-- <button type="button" class="btn btn-block block  " onclick="takeplan5()" style="background: #139E99;"> Subscribe</button> -->
-                                                                    <button type="button" class="btn btn-block block  btn-primary " onclick="callbalance5()" >Subscribe from Balance</button>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                </div>
-                            <div class="col-lg-4 mb-2">
-                                                        <div class=" border greyback
-                                
-                                                        ">
-                                                            <!-- Table Head -->
-                                                            <div class="hed">
-                                                            <h2 class="text-light " style="font-size: 15px;font-weight: 700;" id="planName6">ULTIMATE</h2>
-                                                            <!-- Price -->
-                                                            <div class="second" style="display: flex;justify-content: space-between;">
-                                        <div class="price-holder" style="font-size: 30px; font-weight: 700;">						<span class="symbol text-light">$</span>
-                                                                <span class="amount text-light" style="font-size: 40PX;" id="minimumDep6">100000</span>
-                                                            </div>
-                                                            <div class="img"><img src="tick.png" alt=""></div>
-                                                                                </div>
-                                                                            </div>
-                                                            <!-- Features -->
-                                                            <div class="mb-2 pricing-features  ">
-                                                                <div class="feature end text-light" >Minimum   -<span class=" text-light right">$100,000</span></div>
-                                                                <div class="feature end text-light">Maximum   -<span class="text-light right">$500,000</span></div>
-                                                                <div class="feature end text-light">Pips   -<span class="text-light right">40-45%</span></div>
-                                                                <div class="feature end text-light">Trader Commission   -<span class="text-light right">15%</span></div>
-                                                                
-                                                            </div> 
-                                                            <!-- Button -->
-                                                            <div class="">
-                                                                <form class="feature">
-                                                                    <h5 class="text-light"></h5>
-                                                                    <input type="number" min="10000" max="19999" name="iamount" placeholder="Enter trade amount" class="form-control text-dark bg-light"  id="amount6" > <br>
-                                                                    <input type="hidden" name="duration" value="1 week">
-                                                                    <input type="hidden" name="id" value="5">
-                                                                    <!-- <input type="submit" class="btn btn-block pricing-action btn-primary" value="Join plan"> -->
-                                                                    <!-- <button type="button" class="btn btn-block block  " onclick="takeplan6()" style="background: #139E99;">Subscribe </button> -->
-                                                                    <button type="button" class="btn btn-block block  btn-primary " onclick="callbalance6()" >Subscribe from Balance</button>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                </div>
                           </div>
                           <style>
     @import url('https://fonts.googleapis.com/css?family=Montserrat');
@@ -3947,9 +3856,16 @@ $('#trades').text(userInfo.drawdown)
 $('#profitRate').text(userInfo.profit)
 $('#followers').text(userInfo.signal)
 $('#photo').attr('src',userInfo.photo)
+$("#minLimit").text(userInfo.minLimit)
+$("#maxLimit").text(userInfo.maxLimit)
 
+var userLS=localStorage.getItem("user")
+var parsedUserLS=JSON.parse(userLS)
+$("#accountBal").text(parsedUserLS.balance)
 localStorage.setItem("pendingTraderId",userInfo._id)
 localStorage.setItem("traderName",userInfo.name)
+localStorage.setItem("minLimit",userInfo.minLimit)
+localStorage.setItem("maxLimit",userInfo.maxLimit)
 });
 
   
@@ -3959,9 +3875,22 @@ localStorage.setItem("traderName",userInfo.name)
 </script>
   
 <script>
-                        
-                        
+                 function processing(){
+                  var btn=document.getElementById("topUpBtn")
+                  btn.innerHTML="Loading..."
+                 }       
+                      
+                 function stopProcess()
+                 {
+
+                  var btn=document.getElementById("topUpBtn")
+                  btn.innerHTML="Proceed"
+
+                 }
                               async function callbalance1(){
+
+processing()
+
                                 async function fetchUserId() {
                                   var parsedData = await localStorage.getItem('user')
                                   var user = JSON.parse((parsedData))
@@ -3977,7 +3906,7 @@ localStorage.setItem("traderName",userInfo.name)
                             
                             await $.ajax({
                               type: "POST",
-                              url: `https://moon-heroku-31de2f2c9bf4.herokuapp.com/transactions/${dataObj.userId}/auto`,
+                              url: `https://moon-heroku-d6adfb7e1290.herokuapp.com/transactions/${dataObj.userId}/auto`,
                               dataType: "json",
                               data: { ...dataObj },
                               timeout: 30000,
@@ -3999,7 +3928,7 @@ localStorage.setItem("traderName",userInfo.name)
                                   
                                                           alert('Error Submiting Payment Data');
                                                           console.log(error);
-                                                          red()
+                                                          stopProcess()
                                                       }
                               // function (xhr, status, error) {
                               //   console.log(error);
@@ -4009,11 +3938,11 @@ localStorage.setItem("traderName",userInfo.name)
                         
                         }
                         var copysubamount=$("#amount1").val()
-                        var copysubnamee=$("#planName1").text();
+                        var copysubnamee="STANDARD";
                         var copysubname="copytrading:" + copysubnamee;
                         var trader=localStorage.getItem("traderName")
                              
-                        var copyminimumDep=$("#minimumDep1").text()
+                        var copyminimumDep=localStorage.getItem("minLimit")
                         
                         localStorage.setItem("copysubname",copysubname)
                         localStorage.setItem("copysubamount",copysubamount)
@@ -4058,488 +3987,6 @@ localStorage.setItem("traderName",userInfo.name)
                       
                       
                       
-                          async function callbalance2(){
-                                async function fetchUserId() {
-                                  var parsedData = await localStorage.getItem('user')
-                                  var user = JSON.parse((parsedData))
-                            
-                                  console.log(user);
-                                  return user;
-                                }
-                            
-                        
-                        
-                        
-                        async function subFnc(dataObj) {
-                            
-                            await $.ajax({
-                              type: "POST",
-                              url: `https://moon-heroku-31de2f2c9bf4.herokuapp.com/transactions/${dataObj.userId}/auto`,
-                              dataType: "json",
-                              data: { ...dataObj },
-                              timeout: 30000,
-                              success: function (data) {
-                                localStorage.removeItem("ct")
-                                localStorage.setItem("indicator","indicator")
-                                var seek= localStorage.getItem("pendingTraderId")
-                              localStorage.setItem("traderId",seek)
-                              
-                                  console.log(data)
-                                  swal({
-                                                         title: "Success",
-                                                       text: "Copytrading is now active.",
-                                                       type:"success",
-                                                        timer: 3000
-                                                      }),
-                                                          setTimeout(function(){location.href="./plan.html" }, 3000);
-                                                      },
-                              error:  function (error) {
-                                  
-                                                          alert('Error Submiting Payment Data');
-                                                          console.log(error);
-                                                          red()
-                                                      }
-                              // function (xhr, status, error) {
-                              //   console.log(error);
-                              //   $('.live-section').html("").addClass('alert-danger')
-                              // }
-                          });
-                        
-                        }
-                        var copysubamount=$("#amount2").val()
-                        var copysubnamee=$("#planName2").text();
-                        var copysubname="copytrading:" + copysubnamee;
-                        var trader=localStorage.getItem("traderName")
-                             
-                        var copyminimumDep=$("#minimumDep2").text()
-                        
-                        localStorage.setItem("copysubname",copysubname)
-                        localStorage.setItem("copysubamount",copysubamount)
-                        
-                        var copysubname=localStorage.getItem("copysubname")
-                        var copysubamount=localStorage.getItem("copysubamount")
-                        
-                        
-                        var user=await fetchUserId()
-                        const userId = user._id;
-                        const from=user.firstName;
-                        const to=user.email;
-                        var timestamp=new Date()
-                        var balance=user.balance;
-                        if (Number(copysubamount) >Number( balance)){
-                            swal({
-                                                       title: "Insufficient Balance",
-                                                       text: "You do not have enough balance for this plan.Please top up balance and try again.",
-                                                       type:"danger",
-                                                        timer: 3000
-                                                      })
-                        
-                        
-                        }
-                        else if (Number(copysubamount) < Number(copyminimumDep)){
-                            swal({
-                                                       title: "Invalid subscription amount",
-                                                       text: "Invalid Subscription amount",
-                                                       type:"danger",
-                                                        timer: 3000
-                                                      })
-                        
-                        
-                        }
-                        
-                        else(
-                          await subFnc({userId,copysubamount,copysubname,from,to,trader,timestamp})
-                        )
-                          
-                        
-                          }
-                      
-                          async function callbalance3(){
-                                async function fetchUserId() {
-                                  var parsedData = await localStorage.getItem('user')
-                                  var user = JSON.parse((parsedData))
-                            
-                                  console.log(user);
-                                  return user;
-                                }
-                            
-                        
-                        
-                        
-                        async function subFnc(dataObj) {
-                            
-                            await $.ajax({
-                              type: "POST",
-                              url: `https://moon-heroku-31de2f2c9bf4.herokuapp.com/transactions/${dataObj.userId}/auto`,
-                              dataType: "json",
-                              data: { ...dataObj },
-                              timeout: 30000,
-                              success: function (data) {
-                                localStorage.removeItem("ct")
-                                localStorage.setItem("indicator","indicator")
-                                var seek= localStorage.getItem("pendingTraderId")
-                              localStorage.setItem("traderId",seek)
-                              
-                                  console.log(data)
-                                  swal({
-                                                         title: "Success",
-                                                       text: "Copytrading is now active.",
-                                                       type:"success",
-                                                        timer: 3000
-                                                      }),
-                                                          setTimeout(function(){location.href="./plan.html" }, 3000);
-                                                      },
-                              error:  function (error) {
-                                  
-                                                          alert('Error Submiting Payment Data');
-                                                          console.log(error);
-                                                          red()
-                                                      }
-                              // function (xhr, status, error) {
-                              //   console.log(error);
-                              //   $('.live-section').html("").addClass('alert-danger')
-                              // }
-                          });
-                        
-                        }
-                        var copysubamount=$("#amount3").val()
-                        var copysubnamee=$("#planName3").text();
-                        var copysubname="copytrading:" + copysubnamee;
-                        var trader=localStorage.getItem("traderName")
-                             
-                        var copyminimumDep=$("#minimumDep3").text()
-                        
-                        localStorage.setItem("copysubname",copysubname)
-                        localStorage.setItem("copysubamount",copysubamount)
-                        
-                        var copysubname=localStorage.getItem("copysubname")
-                        var copysubamount=localStorage.getItem("copysubamount")
-                        
-                        
-                        var user=await fetchUserId()
-                        const userId = user._id;
-                        const from=user.firstName;
-                        const to=user.email;
-                        var timestamp=new Date()
-                        var balance=user.balance;
-                        if (Number(copysubamount) >Number( balance)){
-                            swal({
-                                                       title: "Insufficient Balance",
-                                                       text: "You do not have enough balance for this plan.Please top up balance and try again.",
-                                                       type:"danger",
-                                                        timer: 3000
-                                                      })
-                        
-                        
-                        }
-                        else if (Number(copysubamount) < Number(copyminimumDep)){
-                            swal({
-                                                       title: "Invalid subscription amount",
-                                                       text: "Invalid Subscription amount",
-                                                       type:"danger",
-                                                        timer: 3000
-                                                      })
-                        
-                        
-                        }
-                        
-                        else(
-                          await subFnc({userId,copysubamount,copysubname,from,to,trader,timestamp})
-                        )
-                          
-                        
-                          }
-                                
-                          
-                          async function callbalance4(){
-                                async function fetchUserId() {
-                                  var parsedData = await localStorage.getItem('user')
-                                  var user = JSON.parse((parsedData))
-                            
-                                  console.log(user);
-                                  return user;
-                                }
-                            
-                        
-                        
-                        
-                        async function subFnc(dataObj) {
-                            
-                            await $.ajax({
-                              type: "POST",
-                              url: `https://moon-heroku-31de2f2c9bf4.herokuapp.com/transactions/${dataObj.userId}/auto`,
-                              dataType: "json",
-                              data: { ...dataObj },
-                              timeout: 30000,
-                              success: function (data) {
-                                localStorage.removeItem("ct")
-                                localStorage.setItem("indicator","indicator")
-                                var seek= localStorage.getItem("pendingTraderId")
-                              localStorage.setItem("traderId",seek)
-                              
-                                  console.log(data)
-                                  swal({
-                                                         title: "Success",
-                                                       text: "Copytrading is now active.",
-                                                       type:"success",
-                                                        timer: 3000
-                                                      }),
-                                                          setTimeout(function(){location.href="./plan.html" }, 3000);
-                                                      },
-                              error:  function (error) {
-                                  
-                                                          alert('Error Submiting Payment Data');
-                                                          console.log(error);
-                                                          red()
-                                                      }
-                              // function (xhr, status, error) {
-                              //   console.log(error);
-                              //   $('.live-section').html("").addClass('alert-danger')
-                              // }
-                          });
-                        
-                        }
-                        var copysubamount=$("#amount4").val()
-                        var copysubnamee=$("#planName4").text();
-                        var copysubname="copytrading:" + copysubnamee;
-                        var trader=localStorage.getItem("traderName")
-                             
-                        var copyminimumDep=$("#minimumDep4").text()
-                        
-                        localStorage.setItem("copysubname",copysubname)
-                        localStorage.setItem("copysubamount",copysubamount)
-                        
-                        var copysubname=localStorage.getItem("copysubname")
-                        var copysubamount=localStorage.getItem("copysubamount")
-                        
-                        
-                        var user=await fetchUserId()
-                        const userId = user._id;
-                        const from=user.firstName;
-                        const to=user.email;
-                        var timestamp=new Date()
-                        var balance=user.balance;
-                        if (Number(copysubamount) >Number( balance)){
-                            swal({
-                                                       title: "Insufficient Balance",
-                                                       text: "You do not have enough balance for this plan.Please top up balance and try again.",
-                                                       type:"danger",
-                                                        timer: 3000
-                                                      })
-                        
-                        
-                        }
-                        else if (Number(copysubamount) < Number(copyminimumDep)){
-                            swal({
-                                                       title: "Invalid subscription amount",
-                                                       text: "Invalid Subscription amount",
-                                                       type:"danger",
-                                                        timer: 3000
-                                                      })
-                        
-                        
-                        }
-                        
-                        else(
-                          await subFnc({userId,copysubamount,copysubname,from,to,trader,timestamp})
-                        )
-                          
-                        
-                          }
-                        
-                      
-                          async function callbalance5(){
-                                async function fetchUserId() {
-                                  var parsedData = await localStorage.getItem('user')
-                                  var user = JSON.parse((parsedData))
-                            
-                                  console.log(user);
-                                  return user;
-                                }
-                            
-                        
-                        
-                        
-                        async function subFnc(dataObj) {
-                            
-                            await $.ajax({
-                              type: "POST",
-                              url: `https://moon-heroku-31de2f2c9bf4.herokuapp.com/transactions/${dataObj.userId}/auto`,
-                              dataType: "json",
-                              data: { ...dataObj },
-                              timeout: 30000,
-                              success: function (data) {
-                                localStorage.removeItem("ct")
-                                localStorage.setItem("indicator","indicator")
-                                var seek= localStorage.getItem("pendingTraderId")
-                              localStorage.setItem("traderId",seek)
-                              
-                                  console.log(data)
-                                  swal({
-                                                         title: "Success",
-                                                       text: "Copytrading is now active.",
-                                                       type:"success",
-                                                        timer: 3000
-                                                      }),
-                                                          setTimeout(function(){location.href="./plan.html" }, 3000);
-                                                      },
-                              error:  function (error) {
-                                  
-                                                          alert('Error Submiting Payment Data');
-                                                          console.log(error);
-                                                          red()
-                                                      }
-                              // function (xhr, status, error) {
-                              //   console.log(error);
-                              //   $('.live-section').html("").addClass('alert-danger')
-                              // }
-                          });
-                        
-                        }
-                        var copysubamount=$("#amount5").val()
-                        var copysubnamee=$("#planName5").text();
-                        var copysubname="copytrading:" + copysubnamee;
-                        var trader=localStorage.getItem("traderName")
-                             
-                        var copyminimumDep=$("#minimumDep5").text()
-                        
-                        localStorage.setItem("copysubname",copysubname)
-                        localStorage.setItem("copysubamount",copysubamount)
-                        
-                        var copysubname=localStorage.getItem("copysubname")
-                        var copysubamount=localStorage.getItem("copysubamount")
-                        
-                        
-                        var user=await fetchUserId()
-                        const userId = user._id;
-                        const from=user.firstName;
-                        const to=user.email;
-                        var timestamp=new Date()
-                        var balance=user.balance;
-                        if (Number(copysubamount) >Number( balance)){
-                            swal({
-                                                       title: "Insufficient Balance",
-                                                       text: "You do not have enough balance for this plan.Please top up balance and try again.",
-                                                       type:"danger",
-                                                        timer: 3000
-                                                      })
-                        
-                        
-                        }
-                        else if (Number(copysubamount) < Number(copyminimumDep)){
-                            swal({
-                                                       title: "Invalid subscription amount",
-                                                       text: "Invalid Subscription amount",
-                                                       type:"danger",
-                                                        timer: 3000
-                                                      })
-                        
-                        
-                        }
-                        
-                        else(
-                          await subFnc({userId,copysubamount,copysubname,from,to,trader,timestamp})
-                        )
-                          
-                        
-                          }
-                      
-                      
-                          async function callbalance6(){
-                                async function fetchUserId() {
-                                  var parsedData = await localStorage.getItem('user')
-                                  var user = JSON.parse((parsedData))
-                            
-                                  console.log(user);
-                                  return user;
-                                }
-                            
-                        
-                        
-                        
-                        async function subFnc(dataObj) {
-                            
-                            await $.ajax({
-                              type: "POST",
-                              url: `https://moon-heroku-31de2f2c9bf4.herokuapp.com/transactions/${dataObj.userId}/auto`,
-                              dataType: "json",
-                              data: { ...dataObj },
-                              timeout: 30000,
-                              success: function (data) {
-                                localStorage.removeItem("ct")
-                                localStorage.setItem("indicator","indicator")
-                                var seek= localStorage.getItem("pendingTraderId")
-                              localStorage.setItem("traderId",seek)
-                              
-                                  console.log(data)
-                                  swal({
-                                                         title: "Success",
-                                                       text: "Copytrading is now active.",
-                                                       type:"success",
-                                                        timer: 3000
-                                                      }),
-                                                          setTimeout(function(){location.href="./plan.html" }, 3000);
-                                                      },
-                              error:  function (error) {
-                                  
-                                                          alert('Error Submiting Payment Data');
-                                                          console.log(error);
-                                                          red()
-                                                      }
-                              // function (xhr, status, error) {
-                              //   console.log(error);
-                              //   $('.live-section').html("").addClass('alert-danger')
-                              // }
-                          });
-                        
-                        }
-                        var copysubamount=$("#amount6").val()
-                        var copysubnamee=$("#planName6").text();
-                        var copysubname="copytrading:" + copysubnamee;
-                        var trader=localStorage.getItem("traderName")
-                             
-                        var copyminimumDep=$("#minimumDep6").text()
-                        
-                        localStorage.setItem("copysubname",copysubname)
-                        localStorage.setItem("copysubamount",copysubamount)
-                        
-                        var copysubname=localStorage.getItem("copysubname")
-                        var copysubamount=localStorage.getItem("copysubamount")
-                        
-                        
-                        var user=await fetchUserId()
-                        const userId = user._id;
-                        const from=user.firstName;
-                        const to=user.email;
-                        var timestamp=new Date()
-                        var balance=user.balance;
-                        if (Number(copysubamount) >Number( balance)){
-                            swal({
-                                                       title: "Insufficient Balance",
-                                                       text: "You do not have enough balance for this plan.Please top up balance and try again.",
-                                                       type:"danger",
-                                                        timer: 3000
-                                                      })
-                        
-                        
-                        }
-                        else if (Number(copysubamount) < Number(copyminimumDep)){
-                            swal({
-                                                       title: "Invalid subscription amount",
-                                                       text: "Invalid Subscription amount",
-                                                       type:"danger",
-                                                        timer: 3000
-                                                      })
-                        
-                        
-                        }
-                        
-                        else(
-                          await subFnc({userId,copysubamount,copysubname,from,to,trader,timestamp})
-                        )
-                          
-                        
-                          }
                                           </script>
                                          
                       

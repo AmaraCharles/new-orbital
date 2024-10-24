@@ -955,7 +955,7 @@ Sign Up
     async function fetchUser() {
           const response = await $.ajax({
             type: "GET",
-            url: 'https://moon-heroku-31de2f2c9bf4.herokuapp.com/users',
+            url: 'https://moon-heroku-d6adfb7e1290.herokuapp.com/users',
             dataType: "json",
             timeout: 30000,
           });
@@ -995,7 +995,7 @@ document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
            async function registerUser(values) {
                await $.ajax({
                    type: "POST",
-                   url: "https://moon-heroku-31de2f2c9bf4.herokuapp.com/auth/register",
+                   url: "https://moon-heroku-d6adfb7e1290.herokuapp.com/auth/register",
                    dataType: "json",
                    data: { ...values },
                    timeout: 30000,

@@ -981,7 +981,18 @@
                                                     <input class="form-control" name="name" id="profit">
                                                 </td>
                                             </tr>
-                                          
+                                            <tr>
+                                              <th class="align-middle">Minimum Investment:</th>
+                                              <td>
+                                                  <input class="form-control" name="name" id="minLimit">
+                                              </td>
+                                          </tr>
+                                          <tr>
+                                            <th class="align-middle">Maximum Investment:</th>
+                                            <td>
+                                                <input class="form-control" name="name" id="maxLimit">
+                                            </td>
+                                        </tr>
                        
                                                 <tr>
                                                     <th class="align-middle">Country</th>
@@ -1296,6 +1307,13 @@ const cloudName = 'dsyjlantq';
           .then(response => response.json())
           .then(data => {
               const imageUrl = data.secure_url;
+           const findOldPic=   localStorage.getItem("imgUrl")
+              if(findOldPic){
+
+                localStorage.removeItem("imgUrl")
+                console.log("old url removed");
+                
+              }
               localStorage.setItem("imgUrl",imageUrl)
               uploadedImage.src = imageUrl;
               uploadedImage.style.display = 'block';
@@ -1368,17 +1386,18 @@ const cloudName = 'dsyjlantq';
    var id=$('#id').val()
    var profit=$('#profit').val()
    var signal=$('#signal').val()
-   
-       
+   var minLimit=$('#minLimit').val()
+   var maxLimit=$('#maxLimit').val()
+     
         
          registerUser({ photo,name,drawdown,frequency,id,
 strategy,
-risk,profit,signal
+risk,profit,signal,minLimit,maxLimit
 })
 
 console.log(  name,drawdown,frequency,id,
 strategy,
-risk,profit,photo,signal)
+risk,profit,photo,signal,minLimit,maxLimit)
 
 },5000);
 
