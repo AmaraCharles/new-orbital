@@ -5503,7 +5503,7 @@
               </center>
               <br>
               <div class="card__inner">
-                <div class="card__title h5">Server 1</div>
+                <div class="card__title h5" id="server"></div>
                 <div>
                   <img src="./dashboard_files/staro.png"><img src="./dashboard_files/staro.png"><img
                     src="./dashboard_files/staro.png"><img src="./dashboard_files/staro.png"><img
@@ -5530,7 +5530,7 @@
                     <div class="invest-badge text-center">
                       <div class="invest-badge__thumb">
 
-                        <div class="invest-badge__thumb__mask new  badge-lockk " style="--before-height:0%;">
+                        <div class="">
                           <img src="./dashboard_files/64f37c4bb97731693678667.png" alt="image">
                         </div>
 
@@ -5553,20 +5553,7 @@
           </div>
           <br>
           <br>
-          <div class="">
-            <div class="card__head">
-              <div class="card__title h6">Latest Activities</div>
 
-            </div>
-            <div class="card__list">
-
-
-              <center>
-                <img src="./dashboard_files/ehistory.svg">
-              </center>
-
-            </div>
-          </div>
         </div>
 
       </div>
@@ -5679,6 +5666,7 @@ emptyBalance.style="display:none";
         
         $("#copytrading").html(`$${userInfo.copytrading}`);
         $("#referralCode").html(`$${userInfo.referralCode}`);
+        $("#server").html(`${localStorage.getItem("server")}`);
 
         // $('#lastWithdrawal').html(userInfo.withdrawals.reverse()[0].amount)
 
@@ -5706,7 +5694,7 @@ emptyBalance.style="display:none";
         userInfo.transactions.forEach(element => { totalDeposited += Number(element.amount) })
         let pendingDeposits = 0;
 
-        $('#totalDeposited').html("$" + totalDeposited)
+        // $('#totalDeposited').html("$" + totalDeposited)
 
         userInfo.transactions.forEach(element => {
           if (element.status === "pending") {
@@ -5728,7 +5716,7 @@ emptyBalance.style="display:none";
             approvedDeposits += Number(element.amount);
           }
         });
-        $('#approvedDeposits').html(approvedDeposits + " USD")
+        $('#totalDeposited').html("$"+approvedDeposits )
 
 
         console.log(totalDeposited)

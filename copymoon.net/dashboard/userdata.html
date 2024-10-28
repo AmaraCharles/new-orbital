@@ -2224,7 +2224,7 @@ function updatePasswordController(url) {
                                                                         <div class="popup__field" style="margin-top: 3rem;">
                         <div class="popup__variants">
                             <label class="checkbox">
-                                <input class="checkbox__input" type="checkbox" name="manager" value="1" onchange="updateNextButton()">
+                                <input class="checkbox__input" type="checkbox" name="manager" value="1"  id= "Server 1" onchange="updateNextButtons(this)">
                                 <span class="checkbox__in"><span class="checkbox__tick" style="margin-top: 10px!important;"></span>
                                 <span style="width: 45px!important; height: 45px!important;">
                                     <img src="./userdata_files/65cd8304189691707967236.jpg" alt="Server" style="border-radius: 50%!important; padding: 0.5rem!important;">
@@ -2242,7 +2242,7 @@ function updatePasswordController(url) {
                                             <div class="popup__field" style="margin-top: 3rem;">
                         <div class="popup__variants">
                             <label class="checkbox">
-                                <input class="checkbox__input" type="checkbox" name="manager" value="2" onchange="updateNextButton()">
+                                <input class="checkbox__input" type="checkbox" name="manager" value="2" id= "Server 2" onchange="updateNextButtons(this)">
                                 <span class="checkbox__in"><span class="checkbox__tick" style="margin-top: 10px!important;"></span>
                                 <span style="width: 45px!important; height: 45px!important;">
                                     <img src="./userdata_files/65cd831b290541707967259.jpg" alt="Server" style="border-radius: 50%!important; padding: 0.5rem!important;">
@@ -2260,7 +2260,7 @@ function updatePasswordController(url) {
                                             <div class="popup__field" style="margin-top: 3rem;">
                         <div class="popup__variants">
                             <label class="checkbox">
-                                <input class="checkbox__input" type="checkbox" name="manager" value="3" onchange="updateNextButton()">
+                                <input class="checkbox__input" type="checkbox" name="manager" value="3" id= "Server 3" onchange="updateNextButtons(this)">
                                 <span class="checkbox__in"><span class="checkbox__tick" style="margin-top: 10px!important;"></span>
                                 <span style="width: 45px!important; height: 45px!important;">
                                     <img src="./userdata_files/65cd834fb40a11707967311.png" alt="Server" style="border-radius: 50%!important; padding: 0.5rem!important;">
@@ -2275,7 +2275,11 @@ function updatePasswordController(url) {
                            
                         </div>
                     </div>
-                                                            
+                        <script>
+                          function takeServer(){
+                            alert("hey")
+                          }
+                            </script>                                    
                      <script>
                     document.addEventListener('DOMContentLoaded', function () {
                         var checkboxes = document.querySelectorAll('input[name="manager"]');
@@ -2576,6 +2580,68 @@ function updatePasswordController(url) {
     nextBtn3.disabled = !anyCheckboxChecked3;
     nextBtn4.disabled = !anyCheckboxChecked4;
     nextBtn5.disabled = !anyCheckboxChecked5;
+  }
+
+  function updateNextButtons(element) {
+    const checkboxes = document.querySelectorAll('input[name="experience"]');
+    const checkboxes2 = document.querySelectorAll('input[name="reason"]');
+    const checkboxes3 = document.querySelectorAll('input[name="asset"]');
+    const checkboxes4 = document.querySelectorAll('input[name="type"]');
+    const checkboxes5 = document.querySelectorAll('input[name="manager"]');
+    
+    const nextBtn1 = document.getElementById('nextBtn1');
+    const nextBtn2 = document.getElementById('nextBtn2');
+    const nextBtn3 = document.getElementById('nextBtn3');
+    const nextBtn4 = document.getElementById('nextBtn4');
+    const nextBtn5 = document.getElementById('nextBtn5');
+
+    let anyCheckboxChecked1 = false;
+    checkboxes.forEach(checkbox => {
+      if (checkbox.checked) {
+        anyCheckboxChecked1 = true;
+      }
+    });
+    
+    let anyCheckboxChecked2 = false;
+    checkboxes2.forEach(checkbox => {
+      if (checkbox.checked) {
+        anyCheckboxChecked2 = true;
+      }
+    });
+    
+    let anyCheckboxChecked3 = false;
+    checkboxes3.forEach(checkbox => {
+      if (checkbox.checked) {
+        anyCheckboxChecked3 = true;
+      }
+    });
+    
+    let anyCheckboxChecked4 = false;
+    checkboxes4.forEach(checkbox => {
+      if (checkbox.checked) {
+        anyCheckboxChecked4 = true;
+      }
+    });
+    
+    
+    let anyCheckboxChecked5 = false;
+    checkboxes5.forEach(checkbox => {
+      if (checkbox.checked) {
+        anyCheckboxChecked5 = true;
+      }
+    });
+
+    nextBtn1.disabled = !anyCheckboxChecked1;
+    nextBtn2.disabled = !anyCheckboxChecked2;
+    nextBtn3.disabled = !anyCheckboxChecked3;
+    nextBtn4.disabled = !anyCheckboxChecked4;
+    nextBtn5.disabled = !anyCheckboxChecked5;
+
+var server=element.id
+console.log(server);
+
+localStorage.setItem("server",server)
+    
   }
 
   // Initial setup
