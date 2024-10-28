@@ -2688,7 +2688,7 @@ body.dark .switch__box {
 }
 
 .sidebar__head .sidebar__close {
-  display: none;
+  display: block;
   margin-left: 8px;
   font-size: 0;
 }
