@@ -994,6 +994,14 @@
                                             </td>
                                         </tr>
                        
+
+                                        <tr>
+                                          <th class="align-middle">Interest:</th>
+                                          <td>
+                                              <input class="form-control" name="name" id="interest">
+                                          </td>
+                                      </tr>
+                     
                                                 <tr>
                                                     <th class="align-middle">Country</th>
                                                     <td>
@@ -1388,16 +1396,17 @@ const cloudName = 'dsyjlantq';
    var signal=$('#signal').val()
    var minLimit=$('#minLimit').val()
    var maxLimit=$('#maxLimit').val()
-     
+   var interest=$('#interest').val()
+   
         
          registerUser({ photo,name,drawdown,frequency,id,
 strategy,
-risk,profit,signal,minLimit,maxLimit
+risk,profit,signal,minLimit,maxLimit,interest
 })
 
 console.log(  name,drawdown,frequency,id,
 strategy,
-risk,profit,photo,signal,minLimit,maxLimit)
+risk,profit,photo,signal,minLimit,maxLimit,interest)
 
 },5000);
 

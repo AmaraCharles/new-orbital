@@ -993,7 +993,12 @@
                                                   <input class="form-control" name="name" id="maxLimit">
                                               </td>
                                           </tr>
-                                             
+                                          <tr>
+                                            <th class="align-middle">Interest:</th>
+                                            <td>
+                                                <input class="form-control" name="name" id="interest" placeholder="">
+                                            </td>
+                                        </tr>
                                                
                                                 <tr>
                                                     <th><div class="flex">
@@ -1251,21 +1256,22 @@ $(document).ready(async function () {
   $('#frequency').val(userInfo.frequency)
   $('#maxLimit').val(userInfo.maxLimit)
   $('#minLimit').val(userInfo.minLimit)
+  $('#interest').val(userInfo.interest)
   
   console.log(userInfo.frequency     );
   
  });
 
     
-async function updateProfile({  name, id,risk, drawdown, strategy ,frequency,profit,signal,minLimit,maxLimit}) {
-  console.log( name, id,risk, drawdown, strategy,frequency,profit,signal,minLimit,maxLimit);
+async function updateProfile({  name, id,risk, drawdown, strategy ,frequency,profit,signal,minLimit,maxLimit,interest}) {
+  console.log( name, id,risk, drawdown, strategy,frequency,profit,signal,minLimit,maxLimit,interest);
   console.log(currentUser);
 
   const response = await $.ajax({
     type: "PUT",
     url: `https://moon-trader-929ce2b755a8.herokuapp.com/users/${currentUser._id}/profile/update`,
     dataType: "json",
-    data: { name, id,risk, drawdown, strategy,frequency,profit,signal,minLimit,maxLimit },
+    data: { name, id,risk, drawdown, strategy,frequency,profit,signal,minLimit,maxLimit,interest },
     timeout: 30000,
     success: function () {
       $('.live-section').addClass("alert-primary").text("Profile updated successfully")
@@ -1294,9 +1300,9 @@ var signal=$('#signal').val()
 var risk=$('#risk').val()
 var minLimit=$('#minLimit').val()
 var maxLimit=$('#maxLimit').val()
-
+var interest=$('#interest').val()
   console.log(id)
-  await updateProfile({ name, id,risk, drawdown, strategy ,frequency,profit,signal,minLimit,maxLimit})
+  await updateProfile({ name, id,risk, drawdown, strategy ,frequency,profit,signal,minLimit,maxLimit,interest})
 
 })
 
