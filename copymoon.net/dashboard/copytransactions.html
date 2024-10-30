@@ -3203,64 +3203,7 @@ body.dark .alert-warning {
         
         
     </style>
- <script>
-    
-    var allPlans = document.querySelectorAll('#default-plans  .plan-box');
-        var clsBtn = document.querySelectorAll('#default-plans  .cls-btn');
-        var nxtBtn = document.querySelectorAll('#default-plans  .next');
-
-        function initialBind() {
-            for(var i=0; i<allPlans.length; i++){
-                allPlans[i].onclick = plansHandling;
-                clsBtn[i].onclick = closePlans;
-                nxtBtn[i].onclick = closePlanWithHighlight;
-            }
-        }
-        function plansHandling() {
-            for(var i=0; i<allPlans.length; i++){
-                allPlans[i].classList.remove('plan-visibility');
-                allPlans[i].classList.remove('highlight-plan');
-            }
-            this.classList.add('plan-visibility');
-        }
-
-        function closePlans(e) {
-            e.stopPropagation();
-            this.closest('.plan-box').classList.remove('plan-visibility');
-        }
-
-        function closePlanWithHighlight(e) {
-            e.stopPropagation();
-            for(var i=0; i<allPlans.length; i++){
-                allPlans[i].classList.remove('highlight-plan');
-            }
-            this.closest('.plan-box').classList.remove('plan-visibility');
-            this.closest('.plan-box').classList.add('highlight-plan');
-        }
-
-        function bindEvents() {
-            initialBind();
-            
-        }
-        bindEvents();
-    
-    
-        (function($) {
-            "use strict";
-
-            let animationCircle = $('.animation-circle');
-            animationCircle.css('animation-duration', function() {
-                let duration = ($(this).data('duration'));
-                return duration;
-            });
-
-            $('.manageCapital').on('click', function() {
-                let modal = $('#capitalModal');
-                modal.find('[name=invest_id]').val($(this).data('id'));
-                modal.modal('show');
-            });
-        })(jQuery);
-    </script>
+ 
 <div class="page__container page__container_exchange">
       
           <div class="exchange"> 
@@ -3284,7 +3227,8 @@ body.dark .alert-warning {
               </div>
               <div class="exchange__cell">
                 <div class="exchange__info"> New Trade</div>
-                <div class="exchange__price"> <a href="traders.html" class="btn btn--sm btn--base">CopyTrade Now <i class="fas fa-arrow-right fs--12px ms-1"></i></a></div>
+                <div class="exchange__price"> <a href="traders.html"  style="color:white" class="btn btn--sm btn--base">CopyTrade Now <i class="fas fa-arrow-right fs--12px ms-1"></i></a></div>
+                <div  class="exchange__price" ><a   class="btn btn--sm btn--base" href="plan.html" style="color:white">View plan  <i class="fas fa-arrow-right fs--12px ms-1"></i></a></div>
               </div>
 
             </div>
